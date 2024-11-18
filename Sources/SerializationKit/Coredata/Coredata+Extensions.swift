@@ -5,15 +5,17 @@
 import UIKit
 import CoreData
 
-internal extension NSManagedObjectContext {
-    func performAndWait<T>(_ block: () throws -> T) throws -> T {
-        var result: Result<T, Error>?
-        performAndWait {
-            result = Result { try block() }
-        }
-        return try result!.get()
-    }
-}
+//internal extension NSManagedObjectContext {
+//    func performAndWait<T>(_ block: () throws -> T) throws -> T {
+//        var result: Swift.Result<T, Error>? = nil
+//        performAndWait {
+//            result = Swift.Result {
+//                try block()
+//            }
+//        }
+//        return try result!.get()
+//    }
+//}
 
 extension CodingUserInfoKey {
     public static let context = CodingUserInfoKey(rawValue: "ManagedObjectContext_CodingKey")!
@@ -58,32 +60,32 @@ public extension JSONDecoder {
     }
 }
 
-public extension JSONDecoder {
-    
-    // MARK: - Decode & Save
-    func syncSaveList<T: Decodable>(
-        _ type: T.Type,
-        from jsonData: Data,
-        resultHandler: (([T]) -> Void)? = nil
-    ) throws {
-        guard let _context = self.userInfo[.context] as? NSManagedObjectContext else {
-            throw SerializationError("context not found")
-        }
-        try _context.performAndWait {
-            guard let objects = try JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers) as? [[String: AnyObject]] else {
-                throw SerializationError("unable to serialize json data \(jsonData)")
-            }
-            var list: [T] = []
-            for object in objects {
-                let serializedData = try JSONSerialization.data(withJSONObject: object, options: .fragmentsAllowed)
-                let object = try self.decode(T.self, from: serializedData)
-                list.append(object)
-            }
-            try _context.save()
-            resultHandler?(list)
-        }
-    }
-}
+//public extension JSONDecoder {
+//    
+//    // MARK: - Decode & Save
+//    func syncSaveList<T: Decodable>(
+//        _ type: T.Type,
+//        from jsonData: Data,
+//        resultHandler: (([T]) -> Void)? = nil
+//    ) throws {
+//        guard let _context = self.userInfo[.context] as? NSManagedObjectContext else {
+//            throw SerializationError("context not found")
+//        }
+//        try _context.performAndWait {
+//            guard let objects = try JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers) as? [[String: AnyObject]] else {
+//                throw SerializationError("unable to serialize json data \(jsonData)")
+//            }
+//            var list: [T] = []
+//            for object in objects {
+//                let serializedData = try JSONSerialization.data(withJSONObject: object, options: .fragmentsAllowed)
+//                let object = try self.decode(T.self, from: serializedData)
+//                list.append(object)
+//            }
+//            try _context.save()
+//            resultHandler?(list)
+//        }
+//    }
+//}
 
 extension Int64 {
     init(string: String?) throws {
