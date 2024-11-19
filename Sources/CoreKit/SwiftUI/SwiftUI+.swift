@@ -6,29 +6,12 @@ import Foundation
 import SwiftUI
 
 extension Color {
-    static var subHeadlineColor: Color {
-        Color("color_subheadline", bundle: .module)
-    }
-}
-
-struct EmptyDataModifier<Placeholder: View>: ViewModifier {
-    
-    let items: [Any]
-    let placeholder: Placeholder
-    
-    @ViewBuilder
-    func body(content: Content) -> some View {
-        if !items.isEmpty {
-            content
-        } else {
-            placeholder
-        }
-    }
-}
-
-public extension List {    
-    func emptyListPlaceholder(_ items: [Any], _ placeholder: AnyView) -> some View {
-        modifier(EmptyDataModifier(items: items, placeholder: placeholder))
+    static var random: Color {
+        return Color(
+            red: .random(in: 0...1),
+            green: .random(in: 0...1),
+            blue: .random(in: 0...1)
+        )
     }
 }
 
@@ -46,16 +29,6 @@ public extension View {
             duration: duration,
             position: position
         ))        
-    }
-}
-
-extension Color {
-    static var random: Color {
-        return Color(
-            red: .random(in: 0...1),
-            green: .random(in: 0...1),
-            blue: .random(in: 0...1)
-        )
     }
 }
 
