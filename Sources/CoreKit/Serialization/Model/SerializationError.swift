@@ -3,7 +3,6 @@
 //
 
 import Foundation
-import LoggerKit
 
 public struct SerializationError: Error {
     public let message: String
