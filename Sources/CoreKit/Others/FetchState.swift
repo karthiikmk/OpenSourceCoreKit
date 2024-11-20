@@ -14,3 +14,14 @@ public enum FetchState {
         self == .fetching
     }
 }
+
+public enum ViewState {
+    /// The view is currently loading data.
+    case loading
+    /// The view has loaded data, but the list is empty.
+    case empty
+    /// The view failed to load data.
+    case failed
+    /// The view has successfully loaded data.
+    case loaded
+}
