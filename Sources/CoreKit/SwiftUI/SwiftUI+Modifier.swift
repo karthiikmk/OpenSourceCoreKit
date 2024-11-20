@@ -15,8 +15,23 @@ public extension List {
 }
 
 public extension View {
+    
     func onFirstAppear(perform action: (() -> Void)? = nil) -> some View {
         modifier(OnFirstAppear(action: action))
+    }
+    
+    func toast<T:View>(
+        showToast: Binding<Bool>,
+        duration: TimeInterval = 5,
+        position: ToastView<T>.ToastPosition = .top,
+        @ViewBuilder toastContent: @escaping () -> T
+    ) -> some View {
+        modifier(ToastView(
+            showToast: showToast,
+            toastContent: toastContent(),
+            duration: duration,
+            position: position
+        ))
     }
 }
 

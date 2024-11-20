@@ -5,33 +5,6 @@
 import Foundation
 import SwiftUI
 
-extension Color {
-    static var random: Color {
-        return Color(
-            red: .random(in: 0...1),
-            green: .random(in: 0...1),
-            blue: .random(in: 0...1)
-        )
-    }
-}
-
-/// Using ViewModifier to add the toast on top of caller view.
-public extension View {
-    func toast<T:View>(
-        showToast: Binding<Bool>,
-        duration: TimeInterval = 5,
-        position: ToastView<T>.ToastPosition = .top,
-        @ViewBuilder toastContent: @escaping () -> T
-    ) -> some View {
-        modifier(ToastView(
-            showToast: showToast,
-            toastContent: toastContent(),
-            duration: duration,
-            position: position
-        ))        
-    }
-}
-
 public extension View {
     func navigatePush(whenTrue toggle: Binding<Bool>) -> some View {
         NavigationLink(

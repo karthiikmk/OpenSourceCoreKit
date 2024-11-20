@@ -8,6 +8,9 @@
 import Foundation
 import SwiftUI
 
+// - MARK: Image+
+
+/// NOTE: Add your custom image /Resources/Image.assets
 public extension Image {
     
     static let trayIcon = Image(systemName: "tray")

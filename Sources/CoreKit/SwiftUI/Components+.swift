@@ -21,6 +21,23 @@ public struct ActivityIndicatorView: View {
     }
 }
 
+@available(iOS 15.0, *)
+public struct LoaderView: View {
+    let text: String
+    public init(text: String) {
+        self.text = text
+    }
+    
+    public var body: some View {
+        VStack(spacing: .xSmall) {
+            ActivityIndicatorView()
+            Text(text)
+                .font(.title3)
+                .foregroundStyle(.primaryTextColor)
+        }
+    }
+}
+
 /// A view that displays a placeholder with an icon, title, and description.
 /// - Parameters:
 ///   - icon: A closure that returns the icon view to display.
@@ -56,5 +73,14 @@ public struct PlaceHolderView<Icon: View>: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondaryTextColor)
         }
+    }
+}
+
+
+#Preview {
+    if #available(iOS 15.0, *) {
+        LoaderView(text: "Loading")
+    } else {
+        // Fallback on earlier versions
     }
 }
