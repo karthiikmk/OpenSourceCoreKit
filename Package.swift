@@ -8,9 +8,7 @@ let package = Package(
     platforms: [.iOS(.v13)],
     products: [
         .library(name: "CoreKit", targets: ["CoreKit"]),
-        .library(name: "LoggerKit", targets: ["LoggerKit"]),
         .library(name: "NetworkKit", targets: ["NetworkKit"]),
-        .library(name: "SerializationKit", targets: ["SerializationKit"]),
         .library(name: "TaskKit", targets: ["TaskKit"]),
         .library(name: "DIKit", targets: ["DIKit"]),
     ],
@@ -19,14 +17,12 @@ let package = Package(
         .package(name: "SwinjectAutoregistration", url: "https://github.com/Swinject/SwinjectAutoregistration.git", .upToNextMinor(from: "2.8.0"))
     ],
     targets: [
-        .target(name: "CoreKit", dependencies: [], resources: [
+        .target(name: "CoreKit", dependencies: ["Result"], resources: [
             .process("Resources")
         ]),
-        .target(name: "LoggerKit", dependencies: []),
-        .target(name: "SerializationKit", dependencies: ["LoggerKit", "Result"]),
-        .target(name: "TaskKit", dependencies: ["LoggerKit"]),
-        .target(name: "NetworkKit", dependencies: ["LoggerKit", "SerializationKit", "TaskKit"]),
-        .target(name: "DIKit", dependencies: ["LoggerKit", "SwinjectAutoregistration"])
+        .target(name: "NetworkKit", dependencies: ["CoreKit", "TaskKit"]),
+        .target(name: "TaskKit", dependencies: ["CoreKit"]),
+        .target(name: "DIKit", dependencies: ["CoreKit", "SwinjectAutoregistration"])
     ],
     swiftLanguageVersions: [.v5]
 )
